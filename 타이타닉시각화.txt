@@ -1,0 +1,83 @@
+#conda install pymysql
+import pymysql as m
+
+con = m.connect(host='localhost', user='root', password='1234', charset='utf8')
+cur = con.cursor()
+
+q = "CREATE DATABASE DB_FROM_PYTHON;"
+cur.execute(q)
+con.close()
+
+con = m.connect(host='localhost', user='root', password='1234',db = "DB_FROM_PYTHON" ,charset='utf8')
+cur = con.cursor()
+q = """CREATE TABLE table_from_python(
+id INTEGER PRIMARY KEY,
+name VARCHAR(100),
+email VARCHAR(100),
+division VARCHAR(100)
+)
+"""
+cur.execute(q)
+con.commit()
+con.close()
+
+con = m.connect(host='localhost', user='root', password='1234',
+                db = 'DB_FROM_PYTHON', charset='utf8')
+cur = con.cursor()
+q = "INSERT INTO table_from_python(id, name, division) VALUES (%s, %s, %s)"
+cur.execute(q,(1, "Kim","DEV"))
+cur.execute(q,(2, "Lee", "SAL"))
+cur.execute(q,(3, "Park", "ADM"))
+con.commit()
+con.close()
+
+mes1 = "hello, {0}".format("Mr.kim")
+print (mes1)
+
+import pandas as pd
+con = m.connect(host='localhost', user='root', password='1234',
+                db = 'DB_FROM_PYTHON', charset='utf8')
+cur = con.cursor()
+q = 'SELECT * FROM table_from_python;'
+cur.execute(q)
+res = cur.fetchall()
+df1 = pd.DataFrame(res)
+con.close()
+df1
+
+import pandas as pd
+con = m.connect(host='localhost', user='root', password='1234',
+                db = 'DB_FROM_PYTHON', charset='utf8')
+cur = con.cursor()
+q = 'SELECT * FROM table_from_python;'
+cur.execute(q)
+res = cur.fetchall()
+col = ["id","name", "email", "division"]
+df1 = pd.DataFrame(res, columns = col)
+con.close()
+df1
+
+con = m.connect(host='localhost', user='root', password='1234',
+                db = 'DB_FROM_PYTHON', charset='utf8')
+cur = con.cursor()
+q = 'UPDATE table_from_python SET email =%s WHERE id =%s;'
+cur.execute(q, ("developer_kim@good.com", 1))
+cur.execute(q, ("sales_pro_lee@good.com", 2))
+cur.execute(q, ("admin_park@good.com", 3))
+con.commit()
+con.close()
+
+df_tita = pd.read_csv("titanic_full.csv")
+
+df_tita
+
+df_tita_2 = df_tita[['PassengerId', 'Survived', 'Pclass','Sex','Age','SibSp','Parch','Fare']]
+
+df_c = df_tita_2.corr()
+df_c
+
+import matplotlib.pyplot as plt
+import seaborn as sn
+sn.heatmap(df_c, annot=True)
+plt.show()
+
