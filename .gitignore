@@ -1,3 +1,7 @@
+# csv
+*.csv
+*.dot
+
 # database
 /examples
 /datasets
