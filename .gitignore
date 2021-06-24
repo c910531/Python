@@ -1,7 +1,7 @@
 # csv
 *.csv
 *.dot
-
+*.xlsx
 # database
 /examples
 /datasets
