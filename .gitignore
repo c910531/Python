@@ -2,6 +2,7 @@
 *.csv
 *.dot
 *.xlsx
+*.feat
 # database
 /examples
 /datasets
