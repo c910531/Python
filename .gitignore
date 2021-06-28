@@ -3,6 +3,7 @@
 *.dot
 *.xlsx
 *.feat
+*.txt
 # database
 /examples
 /datasets
